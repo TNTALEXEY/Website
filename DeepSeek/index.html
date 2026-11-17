@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>КомпьюТочка — техника, которая работает на тебя</title>
+<meta name="description" content="Магазин электроники и компьютерной техники «КомпьюТочка»: ноутбуки, смартфоны, наушники, комплектующие. Оригинальная техника, гарантия 24 месяца, рассрочка 0%.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ---------- Переменные ---------- */
+  :root{
+    --bg: #f5f8fc;
+    --surface: #ffffff;
+    --ink: #0d1526;
+    --ink-soft: #4a5568;
+    --navy: #0f1b33;
+    --navy-2: #17304f;
+    --accent: #22d3ee;
+    --accent-hover: #06b6d4;
+    --accent-ink: #0e7490;
+    --lime: #b9f227;
+    --radius: 18px;
+    --header-h: 72px;
+    --maxw: 1180px;
+    --shadow-sm: 0 1px 2px rgba(13,21,38,.06), 0 6px 16px rgba(13,21,38,.06);
+    --shadow-lg: 0 16px 36px rgba(13,21,38,.14);
+  }
+
+  /* ---------- Сброс ---------- */
+  *, *::before, *::after{ box-sizing: border-box; }
+
+  html{
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body{
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  img, svg{ display: block; max-width: 100%; }
+  a{ color: inherit; text-decoration: none; }
+  button{ font: inherit; }
+
+  h1, h2, h3{
+    margin: 0 0 .55em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-weight: 800;
+  }
+  p{ margin: 0 0 1em; }
+  p:last-child{ margin-bottom: 0; }
+
+  :focus-visible{
+    outline: 3px solid var(--accent-ink);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  /* ---------- Утилиты ---------- */
+  .container{
+    width: min(100% - 2rem, var(--maxw));
+    margin-inline: auto;
+  }
+
+  .section{
+    padding: clamp(3rem, 7vw, 5.5rem) 0;
+  }
+
+  section[id]{
+    scroll-margin-top: calc(var(--header-h) + 16px);
+  }
+
+  .section__head{
+    margin-bottom: clamp(1.75rem, 4vw, 3rem);
+  }
+  .section__head--center{
+    text-align: center;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .eyebrow{
+    display: inline-block;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    background: rgba(34, 211, 238, .16);
+    border-radius: 999px;
+    padding: .35rem .85rem;
+    margin-bottom: 1rem;
+  }
+
+  .section__title{
+    font-size: clamp(1.6rem, 4vw, 2.5rem);
+    margin-bottom: .5rem;
+  }
+
+  .section__lead{
+    color: var(--ink-soft);
+    font-size: clamp(1rem, 1.6vw, 1.1rem);
+    max-width: 62ch;
+  }
+  .section__head--center .section__lead{
+    margin-inline: auto;
+  }
+
+  /* ---------- Кнопки ---------- */
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    min-height: 48px;
+    padding: .8rem 1.5rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: transform .25s ease, box-shadow .25s ease,
+                background-color .25s ease, color .25s ease, border-color .25s ease;
+  }
+
+  .btn--primary{
+    background: var(--accent);
+    color: #06202b;
+    box-shadow: 0 8px 20px rgba(34, 211, 238, .35);
+  }
+  .btn--primary:hover{
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(34, 211, 238, .45);
+  }
+  .btn--primary:active{ transform: translateY(0); }
+
+  .btn--ghost{
+    background: rgba(255, 255, 255, .7);
+    color: var(--ink);
+    border-color: rgba(13, 21, 38, .18);
+  }
+  .btn--ghost:hover{
+    background: #ffffff;
+    border-color: var(--accent-ink);
+    color: var(--accent-ink);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .btn--sm{
+    min-height: 44px;
+    padding: .55rem 1.1rem;
+    font-size: .95rem;
+  }
+
+  /* ---------- Шапка ---------- */
+  .header{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, .78);
+    -webkit-backdrop-filter: blur(14px) saturate(150%);
+    backdrop-filter: blur(14px) saturate(150%);
+    border-bottom: 1px solid rgba(13, 21, 38, .08);
+  }
+
+  .header__inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: var(--header-h);
+  }
+
+  .logo{
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    font-size: 1.12rem;
+    flex: none;
+  }
+
+  .logo__mark{
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(140deg, var(--navy), var(--navy-2));
+    box-shadow: 0 6px 14px rgba(15, 27, 51, .28);
+  }
+  .logo__mark svg{
+    width: 21px;
+    height: 21px;
+    stroke: var(--accent);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .logo__dot{ color: var(--accent-ink); }
+
+  .nav{
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    padding: .5rem 1rem 1rem;
+    flex-direction: column;
+    gap: .2rem;
+    background: rgba(255, 255, 255, .98);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(13, 21, 38, .1);
+    box-shadow: var(--shadow-lg);
+  }
+  .nav.is-open{ display: flex; }
+
+  .nav a:not(.btn){
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: .6rem .8rem;
+    border-radius: 12px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    transition: color .2s ease, background-color .2s ease;
+  }
+  .nav a:not(.btn):hover{
+    color: var(--ink);
+    background: rgba(13, 21, 38, .06);
+  }
+
+  .nav__cta{
+    display: inline-flex;
+    margin-top: .6rem;
+  }
+
+  .header__actions{
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .header__cta{ display: none; }
+
+  .burger{
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid rgba(13, 21, 38, .14);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .8);
+    cursor: pointer;
+    transition: background-color .2s ease, border-color .2s ease;
+  }
+  .burger:hover{ background: #ffffff; border-color: var(--accent-ink); }
+
+  .burger span{
+    display: block;
+    width: 20px;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform .3s ease, opacity .25s ease;
+  }
+  .burger[aria-expanded="true"] span:nth-child(1){ transform: translateY(7px) rotate(45deg); }
+  .burger[aria-expanded="true"] span:nth-child(2){ opacity: 0; }
+  .burger[aria-expanded="true"] span:nth-child(3){ transform: translateY(-7px) rotate(-45deg); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position: relative;
+    overflow: hidden;
+    padding: clamp(2.5rem, 7vw, 4.5rem) 0 clamp(3rem, 8vw, 5.5rem);
+    background:
+      radial-gradient(60% 60% at 12% 0%, rgba(34, 211, 238, .22), transparent 70%),
+      radial-gradient(50% 55% at 95% 5%, rgba(99, 102, 241, .18), transparent 70%),
+      linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+  }
+
+  .hero__grid{
+    display: grid;
+    gap: clamp(2rem, 5vw, 3rem);
+    align-items: center;
+  }
+
+  .hero__title{
+    font-size: clamp(2rem, 6.2vw, 3.6rem);
+    margin-bottom: .35em;
+  }
+  .hero__title span{
+    background: linear-gradient(100deg, var(--accent-ink), #4f46e5);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero__text{
+    color: var(--ink-soft);
+    font-size: clamp(1rem, 2vw, 1.18rem);
+    max-width: 52ch;
+    margin-bottom: 1.6rem;
+  }
+
+  .hero__actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-bottom: 1.75rem;
+  }
+  .hero__actions .btn{ flex: 1 1 190px; }
+
+  .hero__badges{
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem .75rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: .9rem;
+    color: var(--ink-soft);
+  }
+  .hero__badges li{
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+  }
+  .hero__badges svg{
+    width: 17px;
+    height: 17px;
+    flex: none;
+    stroke: var(--accent-ink);
+    fill: none;
+    stroke-width: 2.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hero__art{
+    position: relative;
+    overflow: hidden;
+    border-radius: 26px;
+    padding: clamp(1rem, 3vw, 1.75rem);
+    background: linear-gradient(150deg, #0f1b33 0%, #17304f 55%, #0b2740 100%);
+    box-shadow: 0 24px 60px rgba(15, 27, 51, .3);
+  }
+  .hero__art::after{
+    content: "";
+    position: absolute;
+    top: -35%;
+    right: -12%;
+    width: 58%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34, 211, 238, .5), transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ---------- О компании ---------- */
+  .about{
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  .stats{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+    gap: .9rem;
+  }
+
+  .stat{
+    padding: 1.25rem 1.1rem;
+    border-radius: 16px;
+    background: var(--surface);
+    border: 1px solid rgba(13, 21, 38, .08);
+    box-shadow: var(--shadow-sm);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .stat:hover{
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(34, 211, 238, .5);
+  }
+  .stat__num{
+    display: block;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--accent-ink);
+    line-height: 1.1;
+    margin-bottom: .25rem;
+  }
+  .stat__label{
+    font-size: .9rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Преимущества ---------- */
+  .grid-adv{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 1rem;
+  }
+
+  .card{
+    background: var(--surface);
+    border: 1px solid rgba(13, 21, 38, .08);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(34, 211, 238, .55);
+  }
+
+  .adv{
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    padding: 1.5rem;
+  }
+
+  .adv__icon{
+    width: 52px;
+    height: 52px;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, rgba(34, 211, 238, .2), rgba(34, 211, 238, .06));
+    color: var(--accent-ink);
+    margin-bottom: .25rem;
+  }
+  .adv__icon svg{
+    width: 26px;
+    height: 26px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .adv h3{
+    font-size: 1.06rem;
+    margin-bottom: .25rem;
+    letter-spacing: -0.01em;
+  }
+  .adv p{
+    font-size: .94rem;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ---------- Товары ---------- */
+  .grid-products{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+    gap: 1.1rem;
+  }
+
+  .product{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .product__thumb{
+    height: 148px;
+    display: grid;
+    place-items: center;
+    background: var(--g, linear-gradient(140deg, #0f1b33, #1e3a8a));
+    position: relative;
+    overflow: hidden;
+  }
+  .product__thumb::before{
+    content: "";
+    position: absolute;
+    inset: auto -20% -60% auto;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, .22), transparent 68%);
+  }
+  .product__thumb svg{
+    width: 52px;
+    height: 52px;
+    stroke: #ffffff;
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    position: relative;
+    opacity: .95;
+  }
+
+  .product__body{
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    padding: 1.25rem;
+    flex: 1;
+  }
+  .product__body h3{
+    font-size: 1.08rem;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+  .product__body p{
+    margin: 0;
+    font-size: .92rem;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .product__price{
+    font-weight: 800;
+    font-size: 1.12rem;
+    letter-spacing: -0.02em;
+    margin-top: .35rem;
+  }
+  .product__body .btn{
+    margin-top: .75rem;
+    width: 100%;
+  }
+
+  .products__more{
+    display: flex;
+    justify-content: center;
+    margin-top: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  /* ---------- Отзывы ---------- */
+  .grid-reviews{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 1.1rem;
+  }
+
+  .review{
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    padding: 1.5rem;
+  }
+
+  .review__head{
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+  }
+
+  .avatar{
+    width: 48px;
+    height: 48px;
+    flex: none;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #ffffff;
+    background: var(--g, linear-gradient(135deg, #0f1b33, #17304f));
+    box-shadow: 0 6px 14px rgba(15, 27, 51, .22);
+  }
+
+  .review__name{
+    font-weight: 700;
+    font-size: .98rem;
+    line-height: 1.25;
+  }
+  .review__role{
+    font-size: .82rem;
+    color: var(--ink-soft);
+  }
+
+  .stars{
+    font-size: 1rem;
+    letter-spacing: .12em;
+    color: #f59e0b;
+    line-height: 1;
+  }
+
+  .review__text{
+    margin: 0;
+    font-size: .95rem;
+    color: var(--ink-soft);
+  }
+
+  /* ---------- Контакты ---------- */
+  .contacts__grid{
+    display: grid;
+    gap: clamp(1.5rem, 4vw, 2.5rem);
+    align-items: start;
+  }
+
+  .contact-list{
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .contact-list li{
+    display: flex;
+    gap: .85rem;
+    align-items: flex-start;
+  }
+
+  .contact-list__icon{
+    width: 44px;
+    height: 44px;
+    flex: none;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: rgba(34, 211, 238, .16);
+    color: var(--accent-ink);
+  }
+  .contact-list__icon svg{
+    width: 21px;
+    height: 21px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .contact-list__label{
+    display: block;
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .contact-list__value{
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  .contact-list a.contact-list__value{
+    transition: color .2s ease;
+  }
+  .contact-list a.contact-list__value:hover{
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .socials{
+    display: flex;
+    gap: .6rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .socials a{
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 13px;
+    background: var(--surface);
+    border: 1px solid rgba(13, 21, 38, .12);
+    color: var(--ink);
+    transition: transform .25s ease, background-color .25s ease,
+                color .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .socials a:hover{
+    background: var(--navy);
+    color: var(--accent);
+    border-color: var(--navy);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+  }
+  .socials svg{
+    width: 21px;
+    height: 21px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .map{
+    position: relative;
+    min-height: 300px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(13, 21, 38, .1);
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    background:
+      linear-gradient(rgba(13, 21, 38, .07) 1px, transparent 1px) 0 0 / 42px 42px,
+      linear-gradient(90deg, rgba(13, 21, 38, .07) 1px, transparent 1px) 0 0 / 42px 42px,
+      linear-gradient(140deg, #e8f0f8, #d2e3f2);
+    box-shadow: var(--shadow-sm);
+  }
+  .map::before{
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(34, 211, 238, .28), transparent 68%);
+    pointer-events: none;
+  }
+
+  .map__pin{
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--navy);
+    color: var(--accent);
+    margin-bottom: .85rem;
+    box-shadow: 0 12px 26px rgba(15, 27, 51, .3);
+  }
+  .map__pin svg{
+    width: 26px;
+    height: 26px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .map__caption{
+    position: relative;
+    font-weight: 600;
+    font-size: .95rem;
+    background: rgba(255, 255, 255, .85);
+    border-radius: 999px;
+    padding: .45rem 1rem;
+  }
+
+  /* ---------- Подвал ---------- */
+  .footer{
+    background: var(--navy);
+    color: #cbd5e1;
+    padding: clamp(2.5rem, 5vw, 3.5rem) 0 1.5rem;
+    margin-top: clamp(2rem, 5vw, 3rem);
+  }
+
+  .footer__inner{
+    display: grid;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+  }
+
+  .footer .logo{ color: #ffffff; }
+  .footer .logo__dot{ color: var(--accent); }
+
+  .footer__about{
+    font-size: .92rem;
+    color: #94a3b8;
+    max-width: 34ch;
+    margin-top: .9rem;
+  }
+
+  .footer__title{
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 .9rem;
+  }
+
+  .footer__nav{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .15rem;
+  }
+  .footer__nav a{
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    color: #94a3b8;
+    font-size: .94rem;
+    transition: color .2s ease, transform .2s ease;
+  }
+  .footer__nav a:hover{
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+
+  .footer .socials a{
+    background: rgba(255, 255, 255, .06);
+    border-color: rgba(255, 255, 255, .14);
+    color: #e2e8f0;
+  }
+  .footer .socials a:hover{
+    background: var(--accent);
+    color: #06202b;
+    border-color: var(--accent);
+  }
+
+  .footer__bottom{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem 1.5rem;
+    padding-top: 1.5rem;
+    font-size: .86rem;
+    color: #94a3b8;
+  }
+  .footer__bottom p{ margin: 0; }
+  .footer__bottom a{
+    color: #94a3b8;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color .2s ease;
+  }
+  .footer__bottom a:hover{ color: var(--accent); }
+
+  /* ---------- Анимация появления ---------- */
+  @keyframes reveal-in{
+    from{ opacity: 0; transform: translateY(26px); }
+    to{ opacity: 1; transform: translateY(0); }
+  }
+
+  @supports (animation-timeline: view()){
+    @media (prefers-reduced-motion: no-preference){
+      .reveal{
+        animation: reveal-in linear both;
+        animation-timeline: view();
+        animation-range: entry 8% cover 26%;
+      }
+    }
+  }
+
+  /* ---------- Медиа-запросы ---------- */
+  @media (min-width: 480px){
+    .hero__actions .btn{ flex: 0 1 auto; }
+  }
+
+  @media (min-width: 768px){
+    .container{ width: min(100% - 3rem, var(--maxw)); }
+
+    .header__cta{ display: inline-flex; }
+    .burger{ display: none; }
+
+    .nav{
+      position: static;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: .15rem;
+      padding: 0;
+      background: none;
+      border: 0;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .nav a:not(.btn){
+      min-height: 44px;
+      padding: .5rem .8rem;
+      font-size: .95rem;
+    }
+    .nav__cta{ display: none; }
+
+    .footer__inner{
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px){
+    .hero__grid{
+      grid-template-columns: 1.05fr .95fr;
+      gap: 3.5rem;
+    }
+    .about{
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    .contacts__grid{
+      grid-template-columns: 1fr 1.05fr;
+      align-items: stretch;
+    }
+    .map{ min-height: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *, *::before, *::after{
+      animation-duration: .001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: .001ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======================= ШАПКА ======================= -->
+<header class="header">
+  <div class="container header__inner">
+    <a class="logo" href="#hero" aria-label="КомпьюТочка — на главную">
+      <span class="logo__mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
+          <path d="M13 2 5 13.5h5.5L11 22l8-11.5h-5.5L13 2Z"/>
+        </svg>
+      </span>
+      <span>Компью<span class="logo__dot">Точка</span></span>
+    </a>
+
+    <nav class="nav" id="main-nav" aria-label="Основная навигация">
+      <a href="#about">О нас</a>
+      <a href="#advantages">Преимущества</a>
+      <a href="#products">Товары</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#contacts">Контакты</a>
+      <a class="btn btn--primary nav__cta" href="#products">Каталог</a>
+    </nav>
+
+    <div class="header__actions">
+      <a class="btn btn--primary btn--sm header__cta" href="#products">Каталог</a>
+      <button class="burger" id="burger" type="button"
+              aria-label="Открыть меню" aria-expanded="false" aria-controls="main-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ======================= HERO ======================= -->
+  <section class="hero" id="hero">
+    <div class="container hero__grid">
+      <div class="hero__content reveal">
+        <span class="eyebrow">Электроника без компромиссов</span>
+        <h1 class="hero__title">Техника, которая <span>работает на тебя</span></h1>
+        <p class="hero__text">
+          Ноутбуки, смартфоны и умные устройства с официальной гарантией.
+          Помогаем выбрать под задачу — без лишних переплат и сложных слов.
+        </p>
+
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#products">Смотреть товары</a>
+          <a class="btn btn--ghost" href="#contacts">Найти магазин</a>
+        </div>
+
+        <ul class="hero__badges">
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+            Оригинальная техника
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+            Гарантия 24 месяца
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+            Доставка от 2 часов
+          </li>
+        </ul>
+      </div>
+
+      <div class="hero__art reveal">
+        <svg viewBox="0 0 460 340" role="img"
+             aria-label="Иллюстрация: ноутбук с графиками продаж, смартфон и элементы интерфейса">
+          <defs>
+            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f8fafc"/>
+              <stop offset="1" stop-color="#c3d0e0"/>
+            </linearGradient>
+            <linearGradient id="accentGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#22d3ee"/>
+              <stop offset="1" stop-color="#6366f1"/>
+            </linearGradient>
+          </defs>
+
+          <!-- свечение -->
+          <circle cx="230" cy="170" r="120" fill="url(#accentGrad)" opacity=".16"/>
+          <circle cx="120" cy="80" r="46" fill="#22d3ee" opacity=".18"/>
+          <circle cx="400" cy="270" r="34" fill="#b9f227" opacity=".18"/>
+
+          <!-- ноутбук -->
+          <rect x="40" y="58" width="300" height="192" rx="16" fill="url(#bodyGrad)"/>
+          <rect x="56" y="74" width="268" height="160" rx="10" fill="#0b1220"/>
+
+          <!-- график -->
+          <rect x="78" y="152" width="24" height="58" rx="6" fill="#22d3ee" opacity=".85"/>
+          <rect x="112" y="132" width="24" height="78" rx="6" fill="#38bdf8" opacity=".75"/>
+          <rect x="146" y="162" width="24" height="48" rx="6" fill="#6366f1" opacity=".8"/>
+          <rect x="180" y="114" width="24" height="96" rx="6" fill="#22d3ee" opacity=".9"/>
+          <rect x="214" y="142" width="24" height="68" rx="6" fill="#818cf8" opacity=".8"/>
+          <rect x="248" y="126" width="24" height="84" rx="6" fill="#38bdf8" opacity=".7"/>
+
+          <polyline points="78,124 112,106 146,128 180,94 214,112 248,86 282,100"
+                    fill="none" stroke="#b9f227" stroke-width="3"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+
+          <circle cx="282" cy="100" r="4.5" fill="#b9f227"/>
+
+          <!-- база ноутбука -->
+          <rect x="22" y="250" width="336" height="16" rx="8" fill="url(#bodyGrad)"/>
+          <rect x="150" y="253" width="80" height="5" rx="2.5" fill="#94a3b8" opacity=".8"/>
+
+          <!-- смартфон -->
+          <rect x="362" y="98" width="88" height="172" rx="20" fill="url(#bodyGrad)"/>
+          <rect x="371" y="112" width="70" height="144" rx="13" fill="#0b1220"/>
+          <circle cx="406" cy="140" r="13" fill="none" stroke="#22d3ee" stroke-width="3"/>
+          <rect x="382" y="166" width="48" height="7" rx="3.5" fill="#38bdf8" opacity=".8"/>
+          <rect x="382" y="182" width="34" height="7" rx="3.5" fill="#6366f1" opacity=".8"/>
+          <rect x="382" y="204" width="48" height="30" rx="8" fill="none" stroke="#b9f227" stroke-width="2.4"/>
+
+          <!-- плавающие элементы -->
+          <rect x="12" y="150" width="52" height="10" rx="5" fill="#22d3ee" opacity=".6"/>
+          <rect x="12" y="170" width="34" height="10" rx="5" fill="#94a3b8" opacity=".5"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= О КОМПАНИИ ======================= -->
+  <section class="section" id="about">
+    <div class="container about">
+      <div class="reveal">
+        <span class="eyebrow">О компании</span>
+        <h2 class="section__title">Магазин, где технику объясняют по-человечески</h2>
+        <p class="section__lead">
+          «КомпьюТочка» открылась в 2015 году как небольшая мастерская и выросла
+          в магазин техники для работы, учёбы и дома.
+        </p>
+        <p class="section__lead">
+          Наша миссия — чтобы покупка техники занимала минуты, а не недели
+          сравнений. Мы подбираем устройства под задачу и честно говорим,
+          когда переплачивать не нужно.
+        </p>
+      </div>
+
+      <div class="stats reveal">
+        <div class="stat">
+          <span class="stat__num">10 лет</span>
+          <span class="stat__label">на рынке электроники</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">50 000+</span>
+          <span class="stat__label">довольных клиентов</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">120+</span>
+          <span class="stat__label">брендов в наличии</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">4.9</span>
+          <span class="stat__label">средняя оценка покупателей</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= ПРЕИМУЩЕСТВА ======================= -->
+  <section class="section" id="advantages">
+    <div class="container">
+      <div class="section__head section__head--center reveal">
+        <span class="eyebrow">Преимущества</span>
+        <h2 class="section__title">Почему выбирают нас</h2>
+        <p class="section__lead">Шесть причин зайти в «КомпьюТочку» — и вернуться снова.</p>
+      </div>
+
+      <div class="grid-adv">
+        <article class="card adv reveal">
+          <div class="adv__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3 4.5 6v5.5c0 4.5 3.2 8.2 7.5 9.5 4.3-1.3 7.5-5 7.5-9.5V6L12 3Z"/>
+              <path d="m9 12 2.2 2.2L15.5 10"/>
+            </svg>
+          </div>
+          <h3>Оригинальная техника</h3>
+          <p>Работаем с официальными поставщиками — с документами и серийными номерами.</p>
+        </article>
+
+        <article class="card adv reveal">
+          <div class="adv__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <circle cx="12" cy="9" r="5.5"/>
+              <path d="M8.6 13.6 7 21l5-2.6L17 21l-1.6-7.4"/>
+            </svg>
+          </div>
+          <h3>Гарантия 24 месяца</h3>
+          <p>Свой сервисный отдел: диагностика и ремонт без отправки в другой город.</p>
+        </article>
+
+        <article class="card adv reveal">
+          <div class="adv__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M2.5 7h11.5v9H2.5z"/>
+              <path d="M14 10.5h3.8l3.7 3.5V16H14z"/>
+              <circle cx="6.5" cy="18" r="1.8"/>
+              <circle cx="17.5" cy="18" r="1.8"/>
+            </svg>
+          </div>
+          <h3>Быстрая доставка</h3>
+          <p>По городу — от 2 часов, по России — от 1 дня. Отслеживание на каждом шаге.</p>
+        </article>
+
+        <article class="card adv reveal">
+          <div class="adv__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="2.5" y="5.5" width="19" height="13" rx="3"/>
+              <path d="M2.5 10h19"/>
+              <path d="M6 14.5h4"/>
+            </svg>
+          </div>
+          <h3>Рассрочка 0%</h3>
+          <p>Оформление за 5 минут прямо в магазине. Без первоначального взноса.</p>
+        </article>
+
+        <article class="card adv reveal">
+          <div class="adv__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 12a8 8 0 0 1 16 0v5a3 3 0 0 1-3 3h-2"/>
+              <rect x="2.4" y="12" width="4.2" height="6" rx="1.8"/>
+              <rect x="17.4" y="12" width="4.2" height="6" rx="1.8"/>
+            </svg>
+          </div>
+          <h3>Консультации специалистов</h3>
+          <p>Инженеры помогут с выбором и настройкой — до и после покупки.</p>
+        </article>
+
+        <article class="card adv reveal">
+          <div class="adv__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="3" y="8.5" width="18" height="12" rx="2.5"/>
+              <path d="M3 13h18"/>
+              <path d="M12 8.5v12"/>
+              <path d="M12 8.5S9.2 8.1 8.2 6.9A2.2 2.2 0 0 1 12 5a2.2 2.2 0 0 1 3.8 1.9c-1 1.2-3.8 1.6-3.8 1.6Z"/>
+            </svg>
+          </div>
+          <h3>Бонусная программа</h3>
+          <p>Копим баллы с каждой покупки — оплачивайте ими до 30% следующего заказа.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= ТОВАРЫ ======================= -->
+  <section class="section" id="products">
+    <div class="container">
+      <div class="section__head section__head--center reveal">
+        <span class="eyebrow">Каталог</span>
+        <h2 class="section__title">Популярные категории</h2>
+        <p class="section__lead">Всё, что нужно для работы, учёбы и умного дома — в наличии.</p>
+      </div>
+
+      <div class="grid-products">
+        <article class="card product reveal">
+          <div class="product__thumb" style="--g: linear-gradient(140deg,#0f1b33,#1e3a8a)" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg>
+          </div>
+          <div class="product__body">
+            <h3>Ноутбуки</h3>
+            <p>Для работы, учёбы и монтажа — от ультрабуков до игровых станций.</p>
+            <span class="product__price">от 42 990 ₽</span>
+            <a class="btn btn--ghost btn--sm" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+
+        <article class="card product reveal">
+          <div class="product__thumb" style="--g: linear-gradient(140deg,#0b2740,#0e7490)" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M10.8 18.6h2.4"/></svg>
+          </div>
+          <div class="product__body">
+            <h3>Смартфоны</h3>
+            <p>Флагманы и практичные модели среднего класса с хорошей камерой.</p>
+            <span class="product__price">от 15 490 ₽</span>
+            <a class="btn btn--ghost btn--sm" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+
+        <article class="card product reveal">
+          <div class="product__thumb" style="--g: linear-gradient(140deg,#312e81,#6366f1)" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 15v-3a8 8 0 0 1 16 0v3"/>
+              <rect x="2.6" y="14" width="4.6" height="7" rx="2.1"/>
+              <rect x="16.8" y="14" width="4.6" height="7" rx="2.1"/>
+            </svg>
+          </div>
+          <div class="product__body">
+            <h3>Наушники</h3>
+            <p>TWS-модели, полноразмерные и студийные — с шумоподавлением и без.</p>
+            <span class="product__price">от 2 190 ₽</span>
+            <a class="btn btn--ghost btn--sm" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+
+        <article class="card product reveal">
+          <div class="product__thumb" style="--g: linear-gradient(140deg,#134e4a,#22d3ee)" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="7" y="7" width="10" height="10" rx="2.2"/>
+              <path d="M10 2.6v4M14 2.6v4M10 17.4v4M14 17.4v4M2.6 10h4M2.6 14h4M17.4 10h4M17.4 14h4"/>
+            </svg>
+          </div>
+          <div class="product__body">
+            <h3>Комплектующие</h3>
+            <p>Видеокарты, процессоры, SSD и память — для апгрейда без переплат.</p>
+            <span class="product__price">от 890 ₽</span>
+            <a class="btn btn--ghost btn--sm" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+
+        <article class="card product reveal">
+          <div class="product__thumb" style="--g: linear-gradient(140deg,#3f2b0f,#b45309)" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <rect x="6.5" y="2.5" width="11" height="19" rx="5.5"/>
+              <path d="M12 6.5v3.5"/>
+            </svg>
+          </div>
+          <div class="product__body">
+            <h3>Аксессуары</h3>
+            <p>Клавиатуры, мыши, хабы, чехлы и кабели, которые не подводят.</p>
+            <span class="product__price">от 490 ₽</span>
+            <a class="btn btn--ghost btn--sm" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+
+        <article class="card product reveal">
+          <div class="product__thumb" style="--g: linear-gradient(140deg,#0f1b33,#0d9488)" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="m3.4 10.6 8.6-7 8.6 7"/>
+              <path d="M5.6 9.6V20h12.8V9.6"/>
+              <path d="M9.7 14.4a3.1 3.1 0 0 1 4.6 0"/>
+              <path d="M12 17.6h.01"/>
+            </svg>
+          </div>
+          <div class="product__body">
+            <h3>Умный дом</h3>
+            <p>Лампы, датчики, камеры и розетки — собираются в один сценарий.</p>
+            <span class="product__price">от 1 290 ₽</span>
+            <a class="btn btn--ghost btn--sm" href="#contacts">Подробнее</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="products__more reveal">
+        <a class="btn btn--primary" href="#contacts">Перейти в каталог</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= ОТЗЫВЫ ======================= -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section__head section__head--center reveal">
+        <span class="eyebrow">Отзывы</span>
+        <h2 class="section__title">Что говорят покупатели</h2>
+        <p class="section__lead">Реальные отзывы клиентов за последние месяцы.</p>
+      </div>
+
+      <div class="grid-reviews">
+        <article class="card review reveal">
+          <div class="review__head">
+            <div class="avatar" style="--g: linear-gradient(135deg,#0f1b33,#1e3a8a)" aria-hidden="true">АК</div>
+            <div>
+              <div class="review__name">Анна Ковалёва</div>
+              <div class="review__role">дизайнер</div>
+            </div>
+          </div>
+          <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+          <p class="review__text">
+            Пришла за ноутбуком для графики, ушла с точной моделью под мои задачи
+            и без навязанных допов. Помогли перенести файлы прямо в магазине.
+          </p>
+        </article>
+
+        <article class="card review reveal">
+          <div class="review__head">
+            <div class="avatar" style="--g: linear-gradient(135deg,#134e4a,#0e7490)" aria-hidden="true">ДМ</div>
+            <div>
+              <div class="review__name">Дмитрий Морозов</div>
+              <div class="review__role">системный администратор</div>
+            </div>
+          </div>
+          <div class="stars" role="img" aria-label="Оценка 5 из 5">★★★★★</div>
+          <p class="review__text">
+            Беру комплектующие для офиса уже второй год. Цены адекватные,
+            всё с гарантией, а по срокам ни разу не подвели.
+          </p>
+        </article>
+
+        <article class="card review reveal">
+          <div class="review__head">
+            <div class="avatar" style="--g: linear-gradient(135deg,#3f2b0f,#b45309)" aria-hidden="true">ЕС</div>
+            <div>
+              <div class="review__name">Елена Соколова</div>
+              <div class="review__role">студентка</div>
+            </div>
+          </div>
+          <div class="stars" role="img" aria-label="Оценка 4 из 5">★★★★☆</div>
+          <p class="review__text">
+            Оформила рассрочку за пять минут, наушники привезли на следующий день.
+            Единственное — хотелось бы больше цветов в наличии.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= КОНТАКТЫ ======================= -->
+  <section class="section" id="contacts">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow">Контакты</span>
+        <h2 class="section__title">Заходите в магазин</h2>
+        <p class="section__lead">Можно прийти без записи — покажем технику и дадим попробовать.</p>
+      </div>
+
+      <div class="contacts__grid">
+        <div class="reveal">
+          <ul class="contact-list">
+            <li>
+              <span class="contact-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/>
+                  <circle cx="12" cy="10" r="2.6"/>
+                </svg>
+              </span>
+              <span>
+                <span class="contact-list__label">Адрес</span>
+                <span class="contact-list__value">г. Москва, ул. Техническая, 14, 1 этаж</span>
+              </span>
+            </li>
+            <li>
+              <span class="contact-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="9"/>
+                  <path d="M12 7v5.2l3.4 2"/>
+                </svg>
+              </span>
+              <span>
+                <span class="contact-list__label">Часы работы</span>
+                <span class="contact-list__value">Пн–Сб 10:00–21:00 · Вс 11:00–19:00</span>
+              </span>
+            </li>
+            <li>
+              <span class="contact-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <path d="M6.6 3h3l1.5 4.4-2 1.4a12.4 12.4 0 0 0 6.1 6.1l1.4-2L21 14.4v3a2.6 2.6 0 0 1-2.9 2.6A17.6 17.6 0 0 1 3 5.9 2.6 2.6 0 0 1 5.6 3Z"/>
+                </svg>
+              </span>
+              <span>
+                <span class="contact-list__label">Телефон</span>
+                <a class="contact-list__value" href="tel:+74951234567">+7 (495) 123-45-67</a>
+              </span>
+            </li>
+            <li>
+              <span class="contact-list__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24">
+                  <rect x="3" y="5.5" width="18" height="13" rx="3"/>
+                  <path d="m3.6 7.2 8.4 6 8.4-6"/>
+                </svg>
+              </span>
+              <span>
+                <span class="contact-list__label">Email</span>
+                <a class="contact-list__value" href="mailto:hello@kompyutochka.ru">hello@kompyutochka.ru</a>
+              </span>
+            </li>
+          </ul>
+
+          <p class="contact-list__label" style="margin-bottom:.6rem">Мы в соцсетях</p>
+          <ul class="socials">
+            <li>
+              <a href="#" aria-label="КомпьюТочка в Telegram">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="m21 3-9.4 18-2.4-7.1L2 11.5 21 3Z"/>
+                  <path d="M21 3 9.2 13.9"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-label="КомпьюТочка во ВКонтакте">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 11.6a8.4 8.4 0 0 1-9 8.3 9.4 9.4 0 0 1-3.2-.6L3 21l1.7-4.6A8.4 8.4 0 1 1 21 11.6Z"/>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="#" aria-label="КомпьюТочка на YouTube">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="2.5" y="5.5" width="19" height="13" rx="4"/>
+                  <path d="m10.4 9.4 4.9 2.6-4.9 2.6V9.4Z"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="map reveal" role="img" aria-label="Схематичная карта: магазин на улице Технической, 14">
+          <div class="map__pin" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/>
+              <circle cx="12" cy="10" r="2.6"/>
+            </svg>
+          </div>
+          <span class="map__caption">ул. Техническая, 14 — 5 минут от метро</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================= ПОДВАЛ ======================= -->
+<footer class="footer">
+  <div class="container footer__inner">
+    <div>
+      <a class="logo" href="#hero" aria-label="КомпьюТочка — на главную">
+        <span class="logo__mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M13 2 5 13.5h5.5L11 22l8-11.5h-5.5L13 2Z"/>
+          </svg>
+        </span>
+        <span>Компью<span class="logo__dot">Точка</span></span>
+      </a>
+      <p class="footer__about">
+        Электроника и компьютерная техника с 2015 года.
+        Подбираем, настраиваем и обслуживаем.
+      </p>
+    </div>
+
+    <nav aria-label="Меню в подвале">
+      <h2 class="footer__title">Разделы</h2>
+      <ul class="footer__nav">
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#advantages">Преимущества</a></li>
+        <li><a href="#products">Товары</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </nav>
+
+    <div>
+      <h2 class="footer__title">Соцсети</h2>
+      <ul class="socials">
+        <li>
+          <a href="#" aria-label="КомпьюТочка в Telegram">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m21 3-9.4 18-2.4-7.1L2 11.5 21 3Z"/>
+              <path d="M21 3 9.2 13.9"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="КомпьюТочка во ВКонтакте">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 11.6a8.4 8.4 0 0 1-9 8.3 9.4 9.4 0 0 1-3.2-.6L3 21l1.7-4.6A8.4 8.4 0 1 1 21 11.6Z"/>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="КомпьюТочка на YouTube">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2.5" y="5.5" width="19" height="13" rx="4"/>
+              <path d="m10.4 9.4 4.9 2.6-4.9 2.6V9.4Z"/>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer__bottom">
+    <p>© 2025 «КомпьюТочка». Все права защищены.</p>
+    <a href="#">Политика конфиденциальности</a>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var burger = document.getElementById('burger');
+    var nav = document.getElementById('main-nav');
+    if (!burger || !nav) return;
+
+    function setOpen(open) {
+      nav.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    }
+
+    burger.addEventListener('click', function () {
+      setOpen(!nav.classList.contains('is-open'));
+    });
+
+    nav.addEventListener('click', function (event) {
+      if (event.target.closest('a')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+        setOpen(false);
+        burger.focus();
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      if (window.innerWidth >= 768) setOpen(false);
+    });
+  })();
+</script>
+</body>
+</html>
